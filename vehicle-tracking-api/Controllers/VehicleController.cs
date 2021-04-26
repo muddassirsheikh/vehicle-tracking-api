@@ -39,12 +39,19 @@ namespace VehicleTracking.Controllers
             return Store.Instance.Vehicles;
         }
 
+        [HttpGet("{id}")]
+        public Vehicle Get(string id)
+        {
+            var veh = Store.Instance.Vehicles.FirstOrDefault(v => v.Id == Convert.ToInt32(id));
+            return veh;
+        }
+
         [HttpPost]
-        public IEnumerable<Vehicle> Scan(Track track)
+        public Vehicle Scan(Track track)
         {
             var veh = Store.Instance.Vehicles.FirstOrDefault(v => v.Id == track.VehicleId);
             veh?.Tracks.Add(track);
-            return Store.Instance.Vehicles;
+            return veh;
         }
     }
 }
